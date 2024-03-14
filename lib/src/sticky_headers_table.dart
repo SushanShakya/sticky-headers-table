@@ -70,6 +70,10 @@ class StickyHeadersTable extends StatefulWidget {
     /// Turn scrollbars
     this.showVerticalScrollbar,
     this.showHorizontalScrollbar,
+    this.cellDecoration,
+    this.columnTitleDecoration,
+    this.rowTitleDecoration,
+    this.legendDecoration,
   })  : this.shouldDisposeScrollControllers = scrollControllers == null,
         this.scrollControllers = scrollControllers ?? ScrollControllers(),
         this.onStickyLegendPressed = onStickyLegendPressed ?? (() {}),
@@ -104,6 +108,10 @@ class StickyHeadersTable extends StatefulWidget {
   final double? initialScrollOffsetY;
   final bool? showVerticalScrollbar;
   final bool? showHorizontalScrollbar;
+  final BoxDecoration? legendDecoration;
+  final BoxDecoration? rowTitleDecoration;
+  final BoxDecoration? columnTitleDecoration;
+  final BoxDecoration? cellDecoration;
 
   final bool shouldDisposeScrollControllers;
 
@@ -220,6 +228,7 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
               behavior: HitTestBehavior.opaque,
               onTap: widget.onStickyLegendPressed,
               child: Container(
+                decoration: widget.legendDecoration,
                 width: widget.cellDimensions.stickyLegendWidth,
                 height: widget.cellDimensions.stickyLegendHeight,
                 alignment: widget.cellAlignments.stickyLegendAlignment,
@@ -249,6 +258,7 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                           behavior: HitTestBehavior.opaque,
                           onTap: () => widget.onColumnTitlePressed(i),
                           child: Container(
+                            decoration: widget.columnTitleDecoration,
                             key: globalRowTitleKeys[i] ??= GlobalKey(),
                             width: widget.cellDimensions.stickyWidth(i),
                             height: widget.cellDimensions.stickyLegendHeight,
@@ -293,6 +303,7 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                           behavior: HitTestBehavior.opaque,
                           onTap: () => widget.onRowTitlePressed(i),
                           child: Container(
+                            decoration: widget.rowTitleDecoration,
                             key: globalColumnTitleKeys[i] ??= GlobalKey(),
                             width: widget.cellDimensions.stickyLegendWidth,
                             height: widget.cellDimensions.stickyHeight(i),
@@ -338,6 +349,7 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                                   onTap: () => widget.onContentCellPressed(
                                       columnIdx, rowIdx),
                                   child: Container(
+                                    decoration: widget.cellDecoration,
                                     width: widget.cellDimensions
                                         .contentSize(rowIdx, columnIdx)
                                         .width,
